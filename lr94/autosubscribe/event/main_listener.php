@@ -67,7 +67,7 @@ class main_listener implements EventSubscriberInterface
 	
 	public function init_forum_data($event)
 	{
-		if(!$event['update'] && $event['action'] != 'edit')
+		if (!$event['update'] && $event['action'] != 'edit')
 		{
 			$forum_data = $event['forum_data'];
 			$forum_data['forum_auto_subscribe'] = false;
@@ -77,7 +77,7 @@ class main_listener implements EventSubscriberInterface
 	
 	public function submit_post($event)
 	{
-		if($event['mode'] != 'post')
+		if ($event['mode'] != 'post')
 		{
 			return;
 		}
@@ -93,7 +93,7 @@ class main_listener implements EventSubscriberInterface
 		$result = $this->db->sql_query($sql);
 		$row = $this->db->sql_fetchrow($result);
 		
-		if($row['forum_auto_subscribe'])
+		if ($row['forum_auto_subscribe'])
 		{
 			$sql_ary = array(
 				'topic_id'		=> $topic_id,
