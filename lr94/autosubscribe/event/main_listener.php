@@ -40,6 +40,7 @@ class main_listener implements EventSubscriberInterface
 			'core.acp_manage_forums_request_data'			=> 'request_forum_data',
 			'core.acp_manage_forums_initialise_data'		=> 'init_forum_data',
 			'core.submit_post_end'							=> 'submit_post',
+			'core.ucp_prefs_personal_data'          		=> 'load_ucp_global_settings',
 		);
 	}
 	
@@ -75,6 +76,11 @@ class main_listener implements EventSubscriberInterface
 			$forum_data['forum_auto_subscribe'] = false;
 			$event['forum_data'] = $forum_data;
 		}
+	}
+	
+	function load_ucp_global_settings($event)
+	{
+		
 	}
 	
 	public function submit_post($event)
