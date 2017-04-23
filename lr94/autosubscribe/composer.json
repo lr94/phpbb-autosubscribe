@@ -1,7 +1,7 @@
 {
     "name": "lr94/autosubscribe",
     "type": "phpbb-extension",
-    "description": "Auto subscribe",
+    "description": "Automatic topic subscription",
     "homepage": "https://github.com/lr94/PhpBB-3.2-Auto-Subscribe",
     "version": "1.0.0-beta",
     "time": "2017-04-23",
