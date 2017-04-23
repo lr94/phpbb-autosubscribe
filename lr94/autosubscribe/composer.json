@@ -2,7 +2,7 @@
     "name": "lr94/autosubscribe",
     "type": "phpbb-extension",
     "description": "Auto subscribe",
-    "version": "1.0.0-alpha",
+    "version": "1.0.0-beta",
     "time": "2017-04-22",
     "keywords": ["automatic", "subscription"],
     "license": "GPL-2.0",
