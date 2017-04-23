@@ -2,6 +2,7 @@
     "name": "lr94/autosubscribe",
     "type": "phpbb-extension",
     "description": "Auto subscribe",
+    "homepage": "https://github.com/lr94/PhpBB-3.2-Auto-Subscribe",
     "version": "1.0.0-beta",
     "time": "2017-04-23",
     "keywords": ["automatic", "subscription"],
@@ -9,7 +10,7 @@
     "authors": [
         {
             "name": "lr94",
-            "role": "Developer"
+            "role": "Lead Developer"
         }
     ],
     "require": {
@@ -20,11 +21,6 @@
         "display-name": "Automatic subscription",
         "soft-require": {
             "phpbb/phpbb": "~3.2"
-        },
-	"version-check": {
-            "host": "www.phpbb.com",
-            "directory": "/customise/db/extension/connection_logger",
-            "filename": "version_check"
         }
     }
 }
