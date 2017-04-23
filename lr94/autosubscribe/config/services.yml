@@ -2,7 +2,6 @@ services:
     lr94.autosubscribe.listener:
         class: lr94\autosubscribe\event\main_listener
         arguments:
-            - '@config'
             - '@dbal.conn'
             - '@user'
             - '@request'
