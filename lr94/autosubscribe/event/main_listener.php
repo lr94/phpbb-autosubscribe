@@ -14,6 +14,7 @@ use phpbb\user;
 use \phpbb\config\config;
 use phpbb\db\driver\driver_interface as db_interface;
 use \phpbb\request\request;
+use \phpbb\template\template;
 
 class main_listener implements EventSubscriberInterface
 {
@@ -21,22 +22,29 @@ class main_listener implements EventSubscriberInterface
 	protected $db;
 	protected $user;
 	protected $request;
+	protected $template;
 
-	public function __construct(config $config, db_interface $db, user $user, request $request)
+	public function __construct(config $config, db_interface $db, user $user, request $request, template $template)
 	{
 		$this->config = $config;
 		$this->db = $db;
 		$this->user = $user;
 		$this->request = $request;
+		$this->template = $template;
 	}
 
 	static public function getSubscribedEvents()
 	{
 		return array(
 			'core.user_setup'								=> 'load_language',
+
 			'core.acp_manage_forums_display_form'			=> 'display_option',
 			'core.acp_manage_forums_request_data'			=> 'request_forum_data',
 			'core.acp_manage_forums_initialise_data'		=> 'init_forum_data',
+
+			'core.ucp_prefs_personal_data'          		=> 'load_ucp_global_settings',
+			'core.ucp_prefs_personal_update_data'			=> 'update_ucp_global_settings',
+
 			'core.submit_post_end'							=> 'submit_post',
 		);
 	}
@@ -75,6 +83,28 @@ class main_listener implements EventSubscriberInterface
 		}
 	}
 	
+	
+	
+	function load_ucp_global_settings($event)
+	{
+		$data = $event['data'];
+		$data['user_auto_subscribe']   = $this->request->variable('auto_subscribe', (bool) $this->user->data['user_auto_subscribe']);
+		$event['data'] = $data;
+                
+		$this->template->assign_vars(array(
+			'S_AUTO_SUBSCRIBE_USER'      => $data['user_auto_subscribe'],
+		));
+	}
+	
+	function update_ucp_global_settings($event)
+	{
+		$sql_ary = $event['sql_ary'];
+		$sql_ary['user_auto_subscribe']   = $event['data']['user_auto_subscribe'];
+		$event['sql_ary'] = $sql_ary;
+	}
+	
+	
+	
 	public function submit_post($event)
 	{
 		if ($event['mode'] != 'post')
@@ -86,14 +116,7 @@ class main_listener implements EventSubscriberInterface
 		$topic_id = $event['data']['topic_id'];
 		$poster_id = $event['data']['poster_id']; // It should be the same as $this->user->data['user_id']
 		
-		$sql = 'SELECT forum_auto_subscribe
-				FROM ' . FORUMS_TABLE . '
-				WHERE forum_id = ' . $forum_id;
-		
-		$result = $this->db->sql_query($sql);
-		$row = $this->db->sql_fetchrow($result);
-		
-		if ($row['forum_auto_subscribe'])
+		if ($this->user->data['user_auto_subscribe'] || $this->forum_auto_subscribe($forum_id))
 		{
 			$sql_ary = array(
 				'topic_id'		=> $topic_id,
@@ -105,6 +128,18 @@ class main_listener implements EventSubscriberInterface
 			
 			$this->db->sql_query($sql);
 		}
+	}
+	
+	private function forum_auto_subscribe($forum_id)
+	{
+		$sql = 'SELECT forum_auto_subscribe
+				FROM ' . FORUMS_TABLE . '
+				WHERE forum_id = ' . $forum_id;
+		
+		$result = $this->db->sql_query($sql);
+		$row = $this->db->sql_fetchrow($result);
+		
+		return $row['forum_auto_subscribe'];
 	}
 }
 
