@@ -26,5 +26,3 @@ $lang = array_merge($lang, array(
 	
 	'AUTO_SUBSCRIPTION_USER'			=> 'Automatically subscribe my new topics',
 ));
-
-?>
