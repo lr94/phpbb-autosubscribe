@@ -106,23 +106,11 @@ class main_listener implements EventSubscriberInterface
 		$event['sql_ary'] = $sql_ary;
 	}
 
-	
 	/*
-		Checks whether the forum specified has been set for the auto subscription
+		When the user is creating a new topic and auto subscription is enabled, check the "Notify me" option
 	*/
-	private function forum_auto_subscribe($forum_id)
-	{
-		$sql = 'SELECT forum_auto_subscribe
-				FROM ' . FORUMS_TABLE . '
-				WHERE forum_id = ' . $forum_id;
-		
-		$result = $this->db->sql_query($sql);
-		$row = $this->db->sql_fetchrow($result);
-		
-		return $row['forum_auto_subscribe'];
-	}
-	
-	private function modify_posting_template($event)
+
+	public function modify_posting_template($event)
 	{
 		if ($event['mode'] != 'post')
 		{
@@ -138,10 +126,26 @@ class main_listener implements EventSubscriberInterface
 		*/
 		if ($this->user->data['user_auto_subscribe'] || $this->forum_auto_subscribe($forum_id))
 		{
+			// Check the option "Notify me..."
 			$page_data = $event['page_data'];
 			$page_data['S_NOTIFY_CHECKED'] = ' checked="checked"';
 			$event['page_data'] = $page_data;
 		}
+	}
+	
+	/*
+		Checks whether the forum specified has been set for the auto subscription
+	*/
+	private function forum_auto_subscribe($forum_id)
+	{
+		$sql = 'SELECT forum_auto_subscribe
+				FROM ' . FORUMS_TABLE . '
+				WHERE forum_id = ' . $forum_id;
+		
+		$result = $this->db->sql_query($sql);
+		$row = $this->db->sql_fetchrow($result);
+		
+		return $row['forum_auto_subscribe'];
 	}
 
 	/*
