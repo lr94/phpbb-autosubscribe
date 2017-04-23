@@ -80,7 +80,13 @@ class main_listener implements EventSubscriberInterface
 	
 	function load_ucp_global_settings($event)
 	{
-		
+		$data = $event['data'];
+		$data['user_auto_subscribe']   = $this->request->variable('auto_subscribe', (bool) $this->user->data['user_auto_subscribe']);
+		$event['data'] = $data;
+                
+		$this->template->assign_vars(array(
+			'S_AUTO_SUBSCRIBE_USER'      => $data['user_auto_subscribe'],
+		));
 	}
 	
 	public function submit_post($event)
