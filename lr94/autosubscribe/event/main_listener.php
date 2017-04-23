@@ -37,12 +37,15 @@ class main_listener implements EventSubscriberInterface
 	{
 		return array(
 			'core.user_setup'								=> 'load_language',
+
 			'core.acp_manage_forums_display_form'			=> 'display_option',
 			'core.acp_manage_forums_request_data'			=> 'request_forum_data',
 			'core.acp_manage_forums_initialise_data'		=> 'init_forum_data',
-			'core.submit_post_end'							=> 'submit_post',
+
 			'core.ucp_prefs_personal_data'          		=> 'load_ucp_global_settings',
 			'core.ucp_prefs_personal_update_data'			=> 'update_ucp_global_settings',
+
+			'core.submit_post_end'							=> 'submit_post',
 		);
 	}
 	
@@ -80,6 +83,8 @@ class main_listener implements EventSubscriberInterface
 		}
 	}
 	
+	
+	
 	function load_ucp_global_settings($event)
 	{
 		$data = $event['data'];
@@ -97,6 +102,8 @@ class main_listener implements EventSubscriberInterface
 		$sql_ary['user_auto_subscribe']   = $event['data']['user_auto_subscribe'];
 		$event['sql_ary'] = $sql_ary;
 	}
+	
+	
 	
 	public function submit_post($event)
 	{
