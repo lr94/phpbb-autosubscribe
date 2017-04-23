@@ -39,10 +39,10 @@ class main_listener implements EventSubscriberInterface
 			'core.acp_manage_forums_request_data'			=> 'request_forum_data',
 			'core.acp_manage_forums_initialise_data'		=> 'init_forum_data',
 
-			'core.ucp_prefs_personal_data'          		=> 'load_ucp_global_settings',
-			'core.ucp_prefs_personal_update_data'			=> 'update_ucp_global_settings',
+			'core.ucp_prefs_post_data'		          		=> 'load_ucp_post_settings',
+			'core.ucp_prefs_post_update_data'				=> 'update_ucp_post_settings',
 
-			'core.submit_post_end'							=> 'submit_post',
+			'core.posting_modify_template_vars'				=> 'modify_posting_template',
 		);
 	}
 	
@@ -88,7 +88,7 @@ class main_listener implements EventSubscriberInterface
 		Functions for the "automatically subscribe my new topics" feature
 	*/
 
-	function load_ucp_global_settings($event)
+	function load_ucp_post_settings($event)
 	{
 		$data = $event['data'];
 		$data['user_auto_subscribe']   = $this->request->variable('auto_subscribe', (bool) $this->user->data['user_auto_subscribe']);
@@ -99,29 +99,26 @@ class main_listener implements EventSubscriberInterface
 		));
 	}
 	
-	function update_ucp_global_settings($event)
+	function update_ucp_post_settings($event)
 	{
 		$sql_ary = $event['sql_ary'];
 		$sql_ary['user_auto_subscribe']   = $event['data']['user_auto_subscribe'];
 		$event['sql_ary'] = $sql_ary;
 	}
-	
-	
+
 	/*
-		Post event handler
+		When the user is creating a new topic and auto subscription is enabled, check the "Notify me" option
 	*/
-	public function submit_post($event)
+
+	public function modify_posting_template($event)
 	{
-		// We want to handle only new topics, no replies
 		if ($event['mode'] != 'post')
 		{
 			return;
 		}
 		
-		$forum_id = $event['data']['forum_id'];
-		$topic_id = $event['data']['topic_id'];
-		$poster_id = $event['data']['poster_id']; // It should be the same as $this->user->data['user_id']
-		
+		$forum_id = $event['forum_id'];
+
 		/*
 			The order matters: if user_auto_subscribe is true PHP won't call forum_auto_subscribe,
 			which would make a useless query to the db since we already know that the topic
@@ -129,15 +126,10 @@ class main_listener implements EventSubscriberInterface
 		*/
 		if ($this->user->data['user_auto_subscribe'] || $this->forum_auto_subscribe($forum_id))
 		{
-			$sql_ary = array(
-				'topic_id'		=> $topic_id,
-				'user_id'		=> $poster_id,
-				'notify_status'	=> NOTIFY_YES
-			);
-		
-			$sql = 'INSERT INTO ' . TOPICS_WATCH_TABLE . ' ' . $this->db->sql_build_array('INSERT', $sql_ary);
-			
-			$this->db->sql_query($sql);
+			// Check the option "Notify me..."
+			$page_data = $event['page_data'];
+			$page_data['S_NOTIFY_CHECKED'] = ' checked="checked"';
+			$event['page_data'] = $page_data;
 		}
 	}
 	
