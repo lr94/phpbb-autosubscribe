@@ -30,6 +30,7 @@ class main_listener implements EventSubscriberInterface
 		$this->db = $db;
 		$this->user = $user;
 		$this->request = $request;
+		$this->template = $template;
 	}
 
 	static public function getSubscribedEvents()
