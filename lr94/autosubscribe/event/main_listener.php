@@ -55,7 +55,11 @@ class main_listener implements EventSubscriberInterface
 		);
 		$event['lang_set_ext'] = $lang_set_ext;
 	}
-	
+
+	/*
+		Functions for the "automatic subscription for all new topic posters in this forum" feature
+	*/
+
 	public function display_option($event)
 	{
 		$template_data = $event['template_data'];
@@ -79,9 +83,11 @@ class main_listener implements EventSubscriberInterface
 			$event['forum_data'] = $forum_data;
 		}
 	}
-	
-	
-	
+
+	/*
+		Functions for the "automatically subscribe my new topics" feature
+	*/
+
 	function load_ucp_global_settings($event)
 	{
 		$data = $event['data'];
@@ -101,9 +107,12 @@ class main_listener implements EventSubscriberInterface
 	}
 	
 	
-	
+	/*
+		Post event handler
+	*/
 	public function submit_post($event)
 	{
+		// We want to handle only new topics, no replies
 		if ($event['mode'] != 'post')
 		{
 			return;
@@ -113,6 +122,11 @@ class main_listener implements EventSubscriberInterface
 		$topic_id = $event['data']['topic_id'];
 		$poster_id = $event['data']['poster_id']; // It should be the same as $this->user->data['user_id']
 		
+		/*
+			The order matters: if user_auto_subscribe is true PHP won't call forum_auto_subscribe,
+			which would make a useless query to the db since we already know that the topic
+			will be subscribed anyway.
+		*/
 		if ($this->user->data['user_auto_subscribe'] || $this->forum_auto_subscribe($forum_id))
 		{
 			$sql_ary = array(
@@ -127,6 +141,9 @@ class main_listener implements EventSubscriberInterface
 		}
 	}
 	
+	/*
+		Checks whether the forum specified has been set for the auto subscription
+	*/
 	private function forum_auto_subscribe($forum_id)
 	{
 		$sql = 'SELECT forum_auto_subscribe
@@ -138,5 +155,9 @@ class main_listener implements EventSubscriberInterface
 		
 		return $row['forum_auto_subscribe'];
 	}
+
+	/*
+		Fortuna favet fortibus
+	*/
 }
 
