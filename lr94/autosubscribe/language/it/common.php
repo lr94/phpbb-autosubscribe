@@ -24,7 +24,7 @@ $lang = array_merge($lang, array(
 	'AUTO_SUBSCRIPTION'					=> 'Sottoscrizione automatica per gli autori degli argomenti',	
 	'AUTO_SUBSCRIPTION_EXPLAIN'			=> 'Se impostato su sì in questo forum gli autori dei nuovi argomenti li sottoscriveranno automaticamente.',
 		
-	'L_AUTO_SUBSCRIPTION_USER'			=> 'Sottoscrivi automaticamente i miei nuovi topic',
+	'AUTO_SUBSCRIPTION_USER'			=> 'Sottoscrivi automaticamente i miei nuovi topic',
 ));
 
 ?>

@@ -24,7 +24,7 @@ $lang = array_merge($lang, array(
 	'AUTO_SUBSCRIPTION'					=> 'Automatic subscription for topic authors',	
 	'AUTO_SUBSCRIPTION_EXPLAIN'			=> 'If set users will automatically subscribe their new topics in this forum',
 	
-	'L_AUTO_SUBSCRIPTION_USER'			=> 'Automatically subscribe my own new topics',
+	'AUTO_SUBSCRIPTION_USER'			=> 'Automatically subscribe my own new topics',
 ));
 
 ?>
