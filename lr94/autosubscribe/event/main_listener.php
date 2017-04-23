@@ -39,8 +39,8 @@ class main_listener implements EventSubscriberInterface
 			'core.acp_manage_forums_request_data'			=> 'request_forum_data',
 			'core.acp_manage_forums_initialise_data'		=> 'init_forum_data',
 
-			'core.ucp_prefs_personal_data'          		=> 'load_ucp_global_settings',
-			'core.ucp_prefs_personal_update_data'			=> 'update_ucp_global_settings',
+			'core.ucp_prefs_post_data'		          		=> 'load_ucp_post_settings',
+			'core.ucp_prefs_post_update_data'				=> 'update_ucp_post_settings',
 
 			'core.posting_modify_template_vars'				=> 'modify_posting_template',
 		);
@@ -88,7 +88,7 @@ class main_listener implements EventSubscriberInterface
 		Functions for the "automatically subscribe my new topics" feature
 	*/
 
-	function load_ucp_global_settings($event)
+	function load_ucp_post_settings($event)
 	{
 		$data = $event['data'];
 		$data['user_auto_subscribe']   = $this->request->variable('auto_subscribe', (bool) $this->user->data['user_auto_subscribe']);
@@ -99,7 +99,7 @@ class main_listener implements EventSubscriberInterface
 		));
 	}
 	
-	function update_ucp_global_settings($event)
+	function update_ucp_post_settings($event)
 	{
 		$sql_ary = $event['sql_ary'];
 		$sql_ary['user_auto_subscribe']   = $event['data']['user_auto_subscribe'];
