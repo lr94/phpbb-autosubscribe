@@ -41,6 +41,7 @@ class main_listener implements EventSubscriberInterface
 			'core.acp_manage_forums_initialise_data'		=> 'init_forum_data',
 			'core.submit_post_end'							=> 'submit_post',
 			'core.ucp_prefs_personal_data'          		=> 'load_ucp_global_settings',
+			'core.ucp_prefs_personal_update_data'			=> 'update_ucp_global_settings',
 		);
 	}
 	
@@ -87,6 +88,13 @@ class main_listener implements EventSubscriberInterface
 		$this->template->assign_vars(array(
 			'S_AUTO_SUBSCRIBE_USER'      => $data['user_auto_subscribe'],
 		));
+	}
+	
+	function update_ucp_global_settings($event)
+	{
+		$sql_ary = $event['sql_ary'];
+		$sql_ary['user_auto_subscribe']   = $event['data']['user_auto_subscribe'];
+		$event['sql_ary'] = $sql_ary;
 	}
 	
 	public function submit_post($event)
