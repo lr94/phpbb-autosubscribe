@@ -3,7 +3,7 @@
     "type": "phpbb-extension",
     "description": "Auto subscribe",
     "version": "1.0.0-beta",
-    "time": "2017-04-22",
+    "time": "2017-04-23",
     "keywords": ["automatic", "subscription"],
     "license": "GPL-2.0",
     "authors": [
