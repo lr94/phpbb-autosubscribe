@@ -116,14 +116,7 @@ class main_listener implements EventSubscriberInterface
 		$topic_id = $event['data']['topic_id'];
 		$poster_id = $event['data']['poster_id']; // It should be the same as $this->user->data['user_id']
 		
-		$sql = 'SELECT forum_auto_subscribe
-				FROM ' . FORUMS_TABLE . '
-				WHERE forum_id = ' . $forum_id;
-		
-		$result = $this->db->sql_query($sql);
-		$row = $this->db->sql_fetchrow($result);
-		
-		if ($row['forum_auto_subscribe'])
+		if ($this->forum_auto_subscribe($forum_id))
 		{
 			$sql_ary = array(
 				'topic_id'		=> $topic_id,
@@ -135,6 +128,18 @@ class main_listener implements EventSubscriberInterface
 			
 			$this->db->sql_query($sql);
 		}
+	}
+	
+	private function forum_auto_subscribe($forum_id)
+	{
+		$sql = 'SELECT forum_auto_subscribe
+				FROM ' . FORUMS_TABLE . '
+				WHERE forum_id = ' . $forum_id;
+		
+		$result = $this->db->sql_query($sql);
+		$row = $this->db->sql_fetchrow($result);
+		
+		return $row['forum_auto_subscribe'];
 	}
 }
 
