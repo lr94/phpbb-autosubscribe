@@ -14,6 +14,7 @@ use phpbb\user;
 use \phpbb\config\config;
 use phpbb\db\driver\driver_interface as db_interface;
 use \phpbb\request\request;
+use \phpbb\template\template;
 
 class main_listener implements EventSubscriberInterface
 {
@@ -21,8 +22,9 @@ class main_listener implements EventSubscriberInterface
 	protected $db;
 	protected $user;
 	protected $request;
+	protected $template;
 
-	public function __construct(config $config, db_interface $db, user $user, request $request)
+	public function __construct(config $config, db_interface $db, user $user, request $request, template $template)
 	{
 		$this->config = $config;
 		$this->db = $db;
