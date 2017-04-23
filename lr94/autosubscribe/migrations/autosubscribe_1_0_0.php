@@ -26,6 +26,9 @@ class autosubscribe_1_0_0 extends migration
 				$this->table_prefix . 'forums' => array(
 					'forum_auto_subscribe'		=> array('BOOL', 0),
 				),
+				$this->table_prefix . 'users' => array(
+					'user_auto_subscribe'		=> array('BOOL', 0),
+				),
 			)
 		);
 	}
@@ -36,6 +39,9 @@ class autosubscribe_1_0_0 extends migration
 			'drop_columns' => array(
 				$this->table_prefix . 'forums' => array(
 					'forum_auto_subscribe',
+				),
+				$this->table_prefix . 'users' => array(
+					'user_auto_subscribe',
 				),
 			),
 		);
