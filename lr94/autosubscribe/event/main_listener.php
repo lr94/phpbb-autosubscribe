@@ -42,7 +42,8 @@ class main_listener implements EventSubscriberInterface
 			'core.ucp_prefs_personal_data'          		=> 'load_ucp_global_settings',
 			'core.ucp_prefs_personal_update_data'			=> 'update_ucp_global_settings',
 
-			'core.submit_post_end'							=> 'submit_post',
+			// 'core.submit_post_end'							=> 'submit_post',
+			'core.posting_modify_template_vars'				=> 'modify_posting_template',
 		);
 	}
 	
@@ -154,6 +155,28 @@ class main_listener implements EventSubscriberInterface
 		$row = $this->db->sql_fetchrow($result);
 		
 		return $row['forum_auto_subscribe'];
+	}
+	
+	private function modify_posting_template($event)
+	{
+		if ($event['mode'] != 'post')
+		{
+			return;
+		}
+		
+		$forum_id = $event['forum_id'];
+
+		/*
+			The order matters: if user_auto_subscribe is true PHP won't call forum_auto_subscribe,
+			which would make a useless query to the db since we already know that the topic
+			will be subscribed anyway.
+		*/
+		if ($this->user->data['user_auto_subscribe'] || $this->forum_auto_subscribe($forum_id))
+		{
+			$page_data = $event['page_data'];
+			$page_data['S_NOTIFY_CHECKED'] = ' checked="checked"';
+			$event['page_data'] = $page_data;
+		}
 	}
 
 	/*
