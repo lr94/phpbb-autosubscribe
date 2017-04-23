@@ -116,7 +116,7 @@ class main_listener implements EventSubscriberInterface
 		$topic_id = $event['data']['topic_id'];
 		$poster_id = $event['data']['poster_id']; // It should be the same as $this->user->data['user_id']
 		
-		if ($this->forum_auto_subscribe($forum_id))
+		if ($this->user->data['user_auto_subscribe'] || $this->forum_auto_subscribe($forum_id))
 		{
 			$sql_ary = array(
 				'topic_id'		=> $topic_id,
