@@ -118,11 +118,6 @@ class main_listener implements EventSubscriberInterface
 			'S_AUTO_SUBSCRIBE_USER'      => $data['user_auto_subscribe'],
 		));
 	}
-	
-	public function acp_update_post_settings($event)
-	{
-		
-	}
 
 	/*
 		When the user is creating a new topic and auto subscription is enabled, check the "Notify me" option
