@@ -42,7 +42,7 @@ class main_listener implements EventSubscriberInterface
 			'core.ucp_prefs_post_data'		          		=> 'load_ucp_post_settings',
 			'core.ucp_prefs_post_update_data'				=> 'update_ucp_post_settings',
 			'core.acp_users_prefs_modify_data'				=> 'acp_load_post_settings',
-			'core.acp_users_prefs_modify_sql'				=> 'acp_update_post_settings',
+			'core.acp_users_prefs_modify_sql'				=> 'update_ucp_post_settings',
 
 			'core.posting_modify_template_vars'				=> 'modify_posting_template',
 		);
