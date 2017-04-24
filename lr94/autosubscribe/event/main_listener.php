@@ -148,7 +148,7 @@ class main_listener implements EventSubscriberInterface
 	}
 	
 	/*
-		Checks whether the forum specified has been set for the auto subscription
+		Checks whether the forum specified has been set for auto subscription
 	*/
 	private function forum_auto_subscribe($forum_id)
 	{
