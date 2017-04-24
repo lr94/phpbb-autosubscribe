@@ -93,29 +93,29 @@ class main_listener implements EventSubscriberInterface
 	public function load_ucp_post_settings($event)
 	{
 		$data = $event['data'];
-		$data['user_auto_subscribe']   = $this->request->variable('auto_subscribe', (bool) $this->user->data['user_auto_subscribe']);
+		$data['user_auto_subscribe'] = $this->request->variable('auto_subscribe', (bool) $this->user->data['user_auto_subscribe']);
 		$event['data'] = $data;
                 
 		$this->template->assign_vars(array(
-			'S_AUTO_SUBSCRIBE_USER'      => $data['user_auto_subscribe'],
+			'S_AUTO_SUBSCRIBE_USER' => $data['user_auto_subscribe'],
 		));
 	}
 	
 	public function update_ucp_post_settings($event)
 	{
 		$sql_ary = $event['sql_ary'];
-		$sql_ary['user_auto_subscribe']   = $event['data']['user_auto_subscribe'];
+		$sql_ary['user_auto_subscribe'] = $event['data']['user_auto_subscribe'];
 		$event['sql_ary'] = $sql_ary;
 	}
 	
 	public function acp_load_post_settings($event)
 	{
 		$data = $event['data'];
-		$data['user_auto_subscribe']   = $this->request->variable('auto_subscribe', (bool) $event['user_row']['user_auto_subscribe']);
+		$data['user_auto_subscribe'] = $this->request->variable('auto_subscribe', (bool) $event['user_row']['user_auto_subscribe']);
 		$event['data'] = $data;
 		
 		$this->template->assign_vars(array(
-			'S_AUTO_SUBSCRIBE_USER'      => $data['user_auto_subscribe'],
+			'S_AUTO_SUBSCRIBE_USER' => $data['user_auto_subscribe'],
 		));
 	}
 
