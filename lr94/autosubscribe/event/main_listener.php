@@ -90,7 +90,7 @@ class main_listener implements EventSubscriberInterface
 		Functions for the "automatically subscribe my new topics" feature
 	*/
 
-	function load_ucp_post_settings($event)
+	public function load_ucp_post_settings($event)
 	{
 		$data = $event['data'];
 		$data['user_auto_subscribe']   = $this->request->variable('auto_subscribe', (bool) $this->user->data['user_auto_subscribe']);
@@ -101,7 +101,7 @@ class main_listener implements EventSubscriberInterface
 		));
 	}
 	
-	function update_ucp_post_settings($event)
+	public function update_ucp_post_settings($event)
 	{
 		$sql_ary = $event['sql_ary'];
 		$sql_ary['user_auto_subscribe']   = $event['data']['user_auto_subscribe'];
