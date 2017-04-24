@@ -108,6 +108,7 @@ class main_listener implements EventSubscriberInterface
 		$event['sql_ary'] = $sql_ary;
 	}
 	
+	// Administrators are able to edit anyone's settings
 	public function acp_load_post_settings($event)
 	{
 		$data = $event['data'];
