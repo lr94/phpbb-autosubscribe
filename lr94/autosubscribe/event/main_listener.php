@@ -110,7 +110,13 @@ class main_listener implements EventSubscriberInterface
 	
 	public function acp_load_post_settings($event)
 	{
+		$data = $event['data'];
+		$data['user_auto_subscribe']   = $this->request->variable('auto_subscribe', (bool) $event['user_row']['user_auto_subscribe']);
+		$event['data'] = $data;
 		
+		$this->template->assign_vars(array(
+			'S_AUTO_SUBSCRIBE_USER'      => $data['user_auto_subscribe'],
+		));
 	}
 	
 	public function acp_update_post_settings($event)
