@@ -3,8 +3,8 @@
     "type": "phpbb-extension",
     "description": "Allows the users to automatically subscribe their new topics adding an option in their global settings. Administrators can also set specific forums so that new topic will be automatically subscribed by their authors.",
     "homepage": "https://github.com/lr94/phpbb-autosubscribe",
-    "version": "1.1.0-rc1",
-    "time": "2017-04-23",
+    "version": "1.1.0-rc2",
+    "time": "2017-07-28",
     "keywords": ["automatic", "subscription"],
     "license": "GPL-2.0",
     "authors": [
