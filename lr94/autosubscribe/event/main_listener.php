@@ -161,9 +161,5 @@ class main_listener implements EventSubscriberInterface
 		
 		return $row['forum_auto_subscribe'];
 	}
-
-	/*
-		Fortuna favet fortibus
-	*/
 }
 
