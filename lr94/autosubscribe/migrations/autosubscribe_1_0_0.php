@@ -1,4 +1,12 @@
 <?php
+
+/**
+*
+* @copyright (c) 2017 Luca Robbiano (lr94)
+* @license GNU General Public License, version 2 (GPL-2.0)
+*
+*/
+
 namespace lr94\autosubscribe\migrations;
 
 use phpbb\db\migration\migration;
