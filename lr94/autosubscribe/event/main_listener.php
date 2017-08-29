@@ -158,6 +158,7 @@ class main_listener implements EventSubscriberInterface
 		
 		$result = $this->db->sql_query($sql);
 		$row = $this->db->sql_fetchrow($result);
+		$this->db->sql_freeresult();
 		
 		return $row['forum_auto_subscribe'];
 	}
