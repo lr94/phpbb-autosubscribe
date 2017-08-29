@@ -154,7 +154,7 @@ class main_listener implements EventSubscriberInterface
 	{
 		$sql = 'SELECT forum_auto_subscribe
 				FROM ' . FORUMS_TABLE . '
-				WHERE forum_id = ' . $forum_id;
+				WHERE forum_id = ' . (int)$forum_id;
 		
 		$result = $this->db->sql_query($sql);
 		$row = $this->db->sql_fetchrow($result);
