@@ -21,6 +21,11 @@
         "display-name": "Automatic Topic Subscription",
         "soft-require": {
             "phpbb/phpbb": "~3.2"
+        },
+        "version-check": {
+            "host": "www.phpbb.com",
+            "directory": "/customise/db/extension/autosubscribe",
+            "filename": "version_check"
         }
     }
 }
